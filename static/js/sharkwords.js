@@ -50,19 +50,30 @@ const isLetterInWord = (letter) => document.querySelector(`div.${letter}`) !== n
 // Called when `letter` is in word. Update contents of divs with `letter`.
 //
 const handleCorrectGuess = (letter) => {
-  // Replace this with your code
-};
 
+  const letterDivs = document.querySelectorAll(`div.${letter}`)
+  for (const letterDiv of letterDivs) {
+    letterDiv.innerHTML = letter
+  }
+}
 //
 // Called when `letter` is not in word.
 //
 // Increment `numWrong` and update the shark image.
 // If the shark gets the person (5 wrong guesses), disable
 // all buttons and show the "play again" message.
-
-const handleWrongGuess = () => {
+const handleWrongGuess = (letter) => {
   numWrong += 1;
-  // Replace this with your code
+ 
+  document.querySelector("#shark-img img").setAttribute("src",`/static/images/guess${numWrong}.png`),
+  5===numWrong;
+
+  if (numWrong >= 5) {
+    const allButtons = document.querySelectorAll('button');
+  for (const button of allButtons) {
+    button.setAttribute('disabled', 'true');
+  }
+  }
 };
 
 //  Reset game state. Called before restarting the game.
