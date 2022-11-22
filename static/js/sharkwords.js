@@ -91,7 +91,13 @@ const resetGame = () => {
 //
 (function startGame() {
   // For now, we'll hardcode the word that the user has to guess.
-  const word = 'star';
+
+  // const word = 'star';
+    min = Math.ceil(0);
+    max = Math.floor(WORDS.length);
+    randomNum = Math.floor(Math.random() * (max - min + 1) + min)
+  
+    const word = WORDS[randomNum];
 
   createDivsForChars(word);
   generateLetterButtons();
@@ -109,7 +115,7 @@ const resetGame = () => {
         } else {
           handleWrongGuess(letter);
         }
-        
+
     if (numRight == word.length) {
       document.getElementById('win').style.display = '';
       const winPlayAgain = document.querySelector('#win');
