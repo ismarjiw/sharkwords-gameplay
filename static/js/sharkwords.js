@@ -1,3 +1,5 @@
+
+
 const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
 const WORDS = [
   'strawberry',
@@ -15,6 +17,7 @@ const WORDS = [
 ];
 
 let numWrong = 0;
+let numRight = 0;
 
 // Loop over the chars in `word` and create divs.
 //
@@ -50,12 +53,13 @@ const isLetterInWord = (letter) => document.querySelector(`div.${letter}`) !== n
 // Called when `letter` is in word. Update contents of divs with `letter`.
 //
 const handleCorrectGuess = (letter) => {
-
+  numRight += 1; 
   const letterDivs = document.querySelectorAll(`div.${letter}`)
   for (const letterDiv of letterDivs) {
-    letterDiv.innerHTML = letter
+    letterDiv.innerHTML = letter;
   }
 }
+
 //
 // Called when `letter` is not in word.
 //
@@ -64,14 +68,16 @@ const handleCorrectGuess = (letter) => {
 // all buttons and show the "play again" message.
 const handleWrongGuess = (letter) => {
   numWrong += 1;
- 
-  document.querySelector("#shark-img img").setAttribute("src",`/static/images/guess${numWrong}.png`),
-  5===numWrong;
+
+  if (numWrong < 5 ) {
+  const shark = document.querySelector("#shark-img img").setAttribute("src",`/static/images/guess${numWrong}.png`);
+  }
 
   if (numWrong >= 5) {
     const allButtons = document.querySelectorAll('button');
+    document.getElementById('play-again').style.display = '';
   for (const button of allButtons) {
-    button.setAttribute('disabled', 'true');
+    button.setAttribute('disabled', true);
   }
   }
 };
@@ -85,16 +91,35 @@ const resetGame = () => {
 //
 (function startGame() {
   // For now, we'll hardcode the word that the user has to guess.
-  const word = 'hello';
+  const word = 'star';
 
   createDivsForChars(word);
   generateLetterButtons();
 
   for (const button of document.querySelectorAll('button')) {
     // add an event handler to handle clicking on a letter button
-    // YOUR CODE HERE
-  }
+    button.addEventListener('click',() => {
+      const letter = button.innerHTML;
 
+      button.setAttribute('disabled', true);
+      
+      // need to figure out how to get win message to
+      // populate when make all correct gusses 
+
+      if (numRight == word.length) {
+        document.getElementById('win').style.display = '';
+        const winPlayAgain = document.querySelector('#win');
+        winPlayAgain.addEventListener('click', resetGame);
+            } else {
+
+      if (word.includes(letter)) {
+        handleCorrectGuess(letter);
+      } else {
+        handleWrongGuess(letter);
+      }
+  }})
+    }
   // add an event handler to handle clicking on the Play Again button
-  // YOUR CODE HERE
+  const playAgain = document.querySelector('#play-again');
+  playAgain.addEventListener('click', resetGame);
 })();
