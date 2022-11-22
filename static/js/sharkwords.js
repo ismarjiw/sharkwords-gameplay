@@ -52,11 +52,11 @@ const isLetterInWord = (letter) => document.querySelector(`div.${letter}`) !== n
 
 // Called when `letter` is in word. Update contents of divs with `letter`.
 //
-const handleCorrectGuess = (letter) => {
-  numRight += 1; 
-  const letterDivs = document.querySelectorAll(`div.${letter}`)
+const handleCorrectGuess = (letter) => { 
+  const letterDivs = document.querySelectorAll(`div.${letter}`);
   for (const letterDiv of letterDivs) {
     letterDiv.innerHTML = letter;
+    numRight += 1;
   }
 }
 
@@ -100,23 +100,21 @@ const resetGame = () => {
     // add an event handler to handle clicking on a letter button
     button.addEventListener('click',() => {
       const letter = button.innerHTML;
-
       button.setAttribute('disabled', true);
-      
+
       // need to figure out how to get win message to
-      // populate when make all correct gusses 
-
-      if (numRight == word.length) {
-        document.getElementById('win').style.display = '';
-        const winPlayAgain = document.querySelector('#win');
-        winPlayAgain.addEventListener('click', resetGame);
-            } else {
-
-      if (word.includes(letter)) {
-        handleCorrectGuess(letter);
-      } else {
-        handleWrongGuess(letter);
-      }
+      // populate when make all correct guesses 
+    if (word.includes(letter)) {
+          handleCorrectGuess(letter);
+        } else {
+          handleWrongGuess(letter);
+        }
+        
+    if (numRight == word.length) {
+      document.getElementById('win').style.display = '';
+      const winPlayAgain = document.querySelector('#win');
+      winPlayAgain.addEventListener('click', resetGame);
+          } else {
   }})
     }
   // add an event handler to handle clicking on the Play Again button
